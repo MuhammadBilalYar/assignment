@@ -23,8 +23,8 @@ namespace Assignment.Test
         {
             ApiClient mockApi = new ApiClient();
             mockApi.GetMockData(1, 50);
-            var instnaces = mockApi.MockObjects;
-            Assert.AreEqual(50, instnaces.Count, "Mock API should return 150 count as available objects");
+            var instnaces = mockApi.MockObjectsCount;
+            Assert.AreEqual(50, instnaces, "Mock API should return 150 count as available objects");
         }
     }
 }

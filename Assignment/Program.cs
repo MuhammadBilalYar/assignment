@@ -15,13 +15,13 @@ namespace Assignment
             int count = mockApi.AvailableInstances();
             int maxThreads = random.Next(config.MinThreads, config.MaxThreads + 1);
 
-            var data = PullMockData(count, maxThreads);
+            int dataCount = PullMockData(count, maxThreads);
 
-            Console.WriteLine($"Avaialble data {data.Count}");
+            Console.WriteLine($"Avaialble data {dataCount}");
             Console.ReadLine();
         }
 
-        static List<MockObject> PullMockData(int count, int maxThreads)
+        static int PullMockData(int count, int maxThreads)
         {
             ApiClient mockApi = new ApiClient();
 
@@ -43,7 +43,7 @@ namespace Assignment
 
             Task.WaitAll(threads);
             Console.WriteLine("All threads complete");
-            return mockApi.MockObjects;
+            return mockApi.MockObjectsCount;
         }
     }
 }

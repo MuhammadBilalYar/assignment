@@ -19,10 +19,12 @@ namespace Assignment
     {
         public ApiClient()
         {
-            MockObjects = new List<MockObject>();
+            MockObjectsCount = 0;
+            this._importer = new Importer();
         }
 
-        public List<MockObject> MockObjects { get; private set; }
+        public int MockObjectsCount { get; private set; }
+        public Importer _importer { get; private set; }
 
         /// <summary>
         /// Mock API that tell us available objects 
@@ -30,7 +32,7 @@ namespace Assignment
         /// <returns></returns>
         public int AvailableInstances()
         {
-            return 150;
+            return 1500;
         }
 
         /// <summary>
@@ -51,9 +53,11 @@ namespace Assignment
 
                 if (HttpStatusCode.OK == response.StatusCode)
                 {
+                    //the only purpose to Deserialize is to get reponse count;
                     List<MockObject> objects = JsonConvert.DeserializeObject<List<MockObject>>(response.Content);
                     Console.WriteLine($"Start: {start}, End: {end}, {objects.Count}");
-                    MockObjects.AddRange(objects);
+                    MockObjectsCount += objects.Count;
+                    this._importer.WriteToFile(response.Content);
                 }
                 else
                 {
