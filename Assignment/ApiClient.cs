@@ -19,11 +19,8 @@ namespace Assignment
     {
         public ApiClient()
         {
-            MockObjectsCount = 0;
             this._importer = new Importer();
         }
-
-        public int MockObjectsCount { get; private set; }
         public Importer _importer { get; private set; }
 
         /// <summary>
@@ -32,7 +29,7 @@ namespace Assignment
         /// <returns></returns>
         public int AvailableInstances()
         {
-            return 1500;
+            return 466;
         }
 
         /// <summary>
@@ -40,11 +37,12 @@ namespace Assignment
         /// </summary>
         /// <param name="start">starting object</param>
         /// <param name="end">end object</param>
-        public void GetMockData(int start, int end)
+        public void GetMockData(object currentState)
         {
             try
             {
-                string url = $"http://5e1aaf5c31118200148f2275.mockapi.io/50?s={start}&e={end}";
+                State state = currentState as State;
+                string url = $"http://5e1aaf5c31118200148f2275.mockapi.io/50?s={state.start}&e={state.end}";
                 Console.WriteLine(url);
                 var client = new RestClient(url);
                 client.Timeout = -1;
@@ -55,8 +53,7 @@ namespace Assignment
                 {
                     //the only purpose to Deserialize is to get reponse count;
                     List<MockObject> objects = JsonConvert.DeserializeObject<List<MockObject>>(response.Content);
-                    Console.WriteLine($"Start: {start}, End: {end}, {objects.Count}");
-                    MockObjectsCount += objects.Count;
+                    Console.WriteLine($"Start: {state.start}, End: {state.end}, Retrived Objects: {objects.Count}");
                     this._importer.WriteToFile(response.Content);
                 }
                 else

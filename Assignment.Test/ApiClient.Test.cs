@@ -21,10 +21,10 @@ namespace Assignment.Test
         [Test]
         public void GetMockData()
         {
+            State state = new State(0,2,50);
             ApiClient mockApi = new ApiClient();
-            mockApi.GetMockData(1, 50);
-            var instnaces = mockApi.MockObjectsCount;
-            Assert.AreEqual(50, instnaces, "Mock API should return 150 count as available objects");
+            mockApi.GetMockData(state);
+            Assert.IsTrue(true);
         }
     }
 }

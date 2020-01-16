@@ -9,6 +9,8 @@ namespace Assignment
         private const string CONFIG_FILENAME = "appsettings.json";
         private const int DEFAULT_MAX_THREAD = 5;
         private const int DEFAULT_MIN_THREAD = 5;
+
+        public const decimal MAX_INSTANCES_PER_THREAD = 50;
         public ConfigManager()
         {
             if (null == _configuration)
